@@ -1,0 +1,11 @@
+# Dépendances
+/node_modules
+
+# Fichiers d'environnement - Ne jamais versionner ce fichier !
+.env
+
+# Logs
+*.log
+
+# Fichiers système
+.DS_Store
