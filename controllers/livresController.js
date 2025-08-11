@@ -79,3 +79,56 @@ export const getLivreById = async (req, res) => {
     res.status(500).send('Erreur du serveur');
   }
 };
+
+// @desc    Supprimer un livre par son ID
+// @route   DELETE /api/livres/:id
+// @access  Public
+export const deleteLivre = async (req, res) => {
+  try {
+    const livre = await Livre.findByIdAndDelete(req.params.id);
+
+    if (!livre) {
+      return res.status(404).json({ msg: 'Livre non trouvé' });
+    }
+
+    // Envoi d'une réponse 200 OK avec un message de succès
+    res.status(200).json({ msg: 'Livre supprimé avec succès' });
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Livre non trouvé (ID invalide)' });
+    }
+    res.status(500).send('Erreur du serveur');
+  }
+};
+
+// @desc    Mettre à jour un livre par son ID
+// @route   PUT /api/livres/:id
+// @access  Public
+export const updateLivre = async (req, res) => {
+  try {
+    const { titre, auteur, resume } = req.body;
+
+    // Construire un objet livre
+    const livreFields = {};
+    if (titre) livreFields.titre = titre;
+    if (auteur) livreFields.auteur = auteur;
+    if (resume) livreFields.resume = resume;
+
+    let livre = await Livre.findById(req.params.id);
+
+    if (!livre) return res.status(404).json({ msg: 'Livre non trouvé' });
+
+    livre = await Livre.findByIdAndUpdate(
+      req.params.id,
+      { $set: livreFields },
+      { new: true } // Pour renvoyer le document modifié
+    );
+
+    res.json(livre);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') return res.status(400).json({ msg: 'Format ID incorrect' });
+    res.status(500).send('Erreur du serveur');
+  }
+};

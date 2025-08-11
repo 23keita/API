@@ -1,34 +1,49 @@
-# Bibliotheque API
-API REST minimale pour gérer une bibliothèque en ligne.
+# Bibliothèque API en ligne
 
-## Fonctionnalités
-- Ajouter un livre (titre, auteur, résumé)
-- Lister les livres avec pagination (page & limit)
-
-## Installation locale
-1. Copier `.env.example` en `.env` et modifier `MONGODB_URI`.
-2. Installer les dépendances:
-   ```
-   npm install
-   ```
-3. Lancer en mode dev:
-   ```
-   npm run dev
-   ```
-4. Lancer en production:
-   ```
-   npm start
-   ```
-
-## Déploiement sur Render
-1. Pousser le repo sur GitHub.
-2. Créer un **Web Service** sur Render lié au repo.
-3. Définir les variables d'environnement dans Render:
-   - `MONGODB_URI` (MongoDB Atlas)
-   - `PORT` (Render fournit automatiquement mais tu peux définir `10000`)
-4. Build command: `npm install`
-   Start command: `npm start`
+Bienvenue sur l'API de la bibliothèque en ligne. Cette API permet de gérer une collection de livres.
 
 ## Endpoints
-- `POST /api/livres` - Ajouter un livre (JSON: titre, auteur, resume)
-- `GET /api/livres?page=1&limit=5` - Lister les livres avec pagination
+
+*   **GET /api/livres**: Récupère une liste paginée de tous les livres. Supporte les paramètres `page` et `limit` pour la pagination.
+*   **GET /api/livres/:id**: Récupère un livre spécifique par son ID.
+*   **POST /api/livres**: Ajoute un nouveau livre à la bibliothèque. Nécessite un corps de requête JSON avec les champs `titre` (obligatoire), `auteur` (obligatoire), et `resume` (optionnel).
+*   **PUT /api/livres/:id**: Met à jour un livre existant par son ID.
+*   **DELETE /api/livres/:id**: Supprime un livre par son ID.
+*   **GET /api-docs**: Displays the Swagger UI for easy API interaction and documentation viewing.
+
+## Prérequis
+
+*   Node.js
+*   npm
+*   MongoDB
+
+## Technologies utilisées
+
+*   **Node.js**: Environnement d'exécution JavaScript côté serveur.
+*   **Express**: Framework web pour Node.js.
+*   **Mongoose**: Librairie de modélisation d'objets MongoDB pour Node.js.
+*   **Swagger**: Outil pour la documentation et l'exploration des API RESTful.
+
+## Installation
+
+1.  Cloner le dépôt
+
+    ```bash
+    git clone <repository-url>
+    ```
+
+2.  Installer les dépendances avec `npm install`
+
+    ```bash
+    npm install
+    ```
+
+## Configuration
+
+1.  Créer un fichier `.env` à la racine du projet en vous basant sur l'exemple `.env.example`.
+2.  Remplir les variables d'environnement avec vos propres valeurs.
+
+## Démarrage du serveur
+```bash
+node server.js
+```
